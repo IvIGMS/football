@@ -16,6 +16,9 @@ public class Player {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Team team;
 
+    public Player() {
+    }
+
     public Long getId() {
         return id;
     }

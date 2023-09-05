@@ -26,12 +26,9 @@ public class LeagueService {
         return new ResponseEntity<>(leagues, HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> createLeague(String name, String country) {
-        League league = new League();
-        league.setName(name);
-        league.setCountry(country);
+    public ResponseEntity<Object> createLeague(League league) {
         leagueRepository.save(league);
-        boolean existsLeague = leagueRepository.existsByName(name);
+        boolean existsLeague = leagueRepository.existsById(league.getId());
 
         if (existsLeague){
             return new ResponseEntity<>("Liga creada correctamente", HttpStatus.CREATED);
@@ -40,7 +37,7 @@ public class LeagueService {
         }
     }
 
-    public ResponseEntity<Object> getLeaguesById(Long id) {
+    public ResponseEntity<Object> getLeagueById(Long id) {
         Optional<League> league = leagueRepository.findById(id);
         if (league.isPresent()){
             // Retorno si hay ligas disponibles.
@@ -50,7 +47,23 @@ public class LeagueService {
             // Retorno si no existe esa liga
             return new ResponseEntity<>("The league you are looking for doesn't exist", HttpStatus.CONFLICT);
         }
+    }
 
-
+    public ResponseEntity<Object> deleteLeague(Long id) {
+        Optional<League> league = leagueRepository.findById(id);
+        // Comprobamos si hay una liga con ese Id
+        if (league.isPresent()){
+            // Borramos la liga
+            leagueRepository.deleteById(id);
+            // Comprobamos si se ha borrado
+            league = leagueRepository.findById(id);
+            if (league.isPresent()){
+                return new ResponseEntity<>("It was not possible to delete the league", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("The league has been deleted", HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>("The league you want to delete doesn't exist", HttpStatus.CONFLICT);
+        }
     }
 }

@@ -14,6 +14,14 @@ public class League {
     @OneToMany(mappedBy = "league", cascade = CascadeType.ALL)
     private List<Team> teams;
 
+    public League() {
+    }
+
+    public League(Long id) {
+        this.id = id;
+    }
+
+
     public Long getId() {
         return id;
     }
