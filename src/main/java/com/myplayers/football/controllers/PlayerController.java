@@ -33,4 +33,14 @@ public class PlayerController {
     public ResponseEntity<Object> deletePlayer(@PathVariable Long id){
         return playerService.deletePlayer(id);
     }
+
+    @GetMapping("/number/{number}")
+    public ResponseEntity<Object> getPlayerByNumber(@PathVariable int number){
+        return playerService.getPlayerByNumber(number);
+    }
+
+    @GetMapping("/country/{country}")
+    public ResponseEntity<Object> getPlayerByCountry(@PathVariable String country){
+        return playerService.getPlayerByCountry(country);
+    }
 }

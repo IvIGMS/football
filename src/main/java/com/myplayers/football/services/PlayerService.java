@@ -1,7 +1,9 @@
 package com.myplayers.football.services;
 
 import com.myplayers.football.models.Player;
+import com.myplayers.football.models.Team;
 import com.myplayers.football.repositories.PlayerRepository;
+import com.myplayers.football.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import java.util.Optional;
 public class PlayerService {
     @Autowired
     PlayerRepository playerRepository;
+
+    @Autowired
+    TeamRepository teamRepository;
 
     public ResponseEntity<Object> getPlayers() {
         List<Player> players = playerRepository.findAll();
@@ -63,5 +68,27 @@ public class PlayerService {
         } else {
             return new ResponseEntity<>("The player you want to delete doesn't exist", HttpStatus.CONFLICT);
         }
+    }
+
+    public ResponseEntity<Object> getPlayerByNumber(int number) {
+        List<Player> currentPlayers = playerRepository.findByNumber(number);
+        if (currentPlayers.size()==0){
+            // Retorno si aun no hay ningun jugador.
+            return new ResponseEntity<>("No hay jugadores aun con ese dorsal", HttpStatus.CONFLICT);
+        }
+        // Retorno si hay jugadores disponibles.
+        return new ResponseEntity<>(currentPlayers, HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<Object> getPlayerByCountry(String country) {
+        List<Player> currentPlayers = playerRepository.findByCountry(country);
+        if (currentPlayers.size()==0){
+            // Retorno si aun no hay ningun jugador.
+            return new ResponseEntity<>("No hay jugadores aun con ese pais", HttpStatus.CONFLICT);
+        }
+        // Retorno si hay jugadores disponibles.
+        return new ResponseEntity<>(currentPlayers, HttpStatus.OK);
+
     }
 }
