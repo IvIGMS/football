@@ -10,13 +10,30 @@ public class Player {
     private Long id;
     private String name;
     private String position;
-    private String managerName;
+    private String country;
+    private int number;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "team_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Team team;
 
     public Player() {
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Long getId() {
@@ -41,14 +58,6 @@ public class Player {
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public String getManagerName() {
-        return managerName;
-    }
-
-    public void setManagerName(String managerName) {
-        this.managerName = managerName;
     }
 
     public Team getTeam() {

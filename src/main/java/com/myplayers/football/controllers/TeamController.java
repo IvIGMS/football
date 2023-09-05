@@ -25,11 +25,6 @@ public class TeamController {
     // CREATE
     @PostMapping("/create")
     public ResponseEntity<Object> createTeams(@RequestBody Team team){
-        System.out.println(team.getName());
-        System.out.println(team.getManagerName());
-        System.out.println(team.getPresidentName());
-        System.out.println(team.getLeague());
-
         return teamService.createTeam(team);
     }
     // DELETE
