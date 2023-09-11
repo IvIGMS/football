@@ -1,12 +1,15 @@
 package com.myplayers.football.services;
 
 import com.myplayers.football.models.Team;
+import com.myplayers.football.models.TeamDTO;
 import com.myplayers.football.repositories.TeamRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +20,20 @@ public class TeamService {
 
     public ResponseEntity<Object> getTeams() {
         List<Team> teams = teamRepository.findAll();
-        if (teams.size()==0){
-            // Retorno si aun no hay ningun equipo.
-            return new ResponseEntity<>("No hay equipos aun", HttpStatus.CONFLICT);
+        if (teams.isEmpty()) {
+            // Retorno si no hay equipos.
+            return new ResponseEntity<>("No hay equipos aún", HttpStatus.CONFLICT);
         }
-        // Retorno si hay equipos disponibles.
-        return new ResponseEntity<>(teams, HttpStatus.OK);
+
+        List<TeamDTO> teamsDTO = new ArrayList<>();
+        for (Team team : teams) {
+            TeamDTO teamDTO = new TeamDTO();
+            BeanUtils.copyProperties(team, teamDTO);
+            teamsDTO.add(teamDTO);
+        }
+
+        // Retorno de la lista de TeamDTO
+        return new ResponseEntity<>(teamsDTO, HttpStatus.OK);
     }
 
     public ResponseEntity<Object> createTeam(Team team) {
