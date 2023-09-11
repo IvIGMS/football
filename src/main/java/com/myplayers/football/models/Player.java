@@ -36,7 +36,7 @@ public class Player {
         this.number = number;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
