@@ -43,4 +43,9 @@ public class PlayerController {
     public ResponseEntity<Object> getPlayerByCountry(@PathVariable String country){
         return playerService.getPlayerByCountry(country);
     }
+
+    @GetMapping("/position/{position}")
+    public ResponseEntity<Object> getPlayerByPosition(@PathVariable String position){
+        return playerService.getPlayerByPosition(position);
+    }
 }

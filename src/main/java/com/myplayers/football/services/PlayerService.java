@@ -91,4 +91,15 @@ public class PlayerService {
         return new ResponseEntity<>(currentPlayers, HttpStatus.OK);
 
     }
+
+    public ResponseEntity<Object> getPlayerByPosition(String position) {
+        List<Player> currentPlayers = playerRepository.findByPosition(position);
+        if (currentPlayers.size()==0){
+            // Retorno si aun no hay ningun jugador.
+            return new ResponseEntity<>("No hay jugadores aun con esa posicion", HttpStatus.CONFLICT);
+        }
+        // Retorno si hay jugadores disponibles.
+        return new ResponseEntity<>(currentPlayers, HttpStatus.OK);
+
+    }
 }

@@ -10,4 +10,5 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     // CODE
     List<Player> findByNumber(int number);
     List<Player> findByCountry(String country);
+    List<Player> findByPosition(String position);
 }
